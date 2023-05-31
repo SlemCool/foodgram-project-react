@@ -21,7 +21,7 @@ class Ingredient(models.Model):
 class Tag(models.Model):
     name = models.CharField('Название', unique=True, max_length=200)
     color = models.CharField(
-        'Цветовой HEX-код',
+        'Цветовой код HEX',
         unique=True,
         max_length=7,
         validators=[

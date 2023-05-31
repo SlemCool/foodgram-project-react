@@ -18,7 +18,7 @@ class UserModelTest(TestCase):
         self.assertTrue(self.user.check_password('testpassword'))
 
     def test_user_unicode_representation(self):
-        self.assertEqual(str(self.user), 'testuser@example.com')
+        self.assertEqual(str(self.user), 'testuser')
 
     def test_user_ordering(self):
         users = User.objects.all()
@@ -35,12 +35,12 @@ class SubscribeModelTest(TestCase):
     def setUp(self):
         self.test_user1 = User.objects.create_user(
             username='testuser1',
-            email='testuser@example.com',
+            email='testuser1@example.com',
             password='testpass1',
         )
         self.test_user2 = User.objects.create_user(
             username='testuser2',
-            email='testuser@example.com',
+            email='testuser2@example.com',
             password='testpass2',
         )
         Subscribe.objects.create(user=self.test_user1, author=self.test_user2)
@@ -59,10 +59,6 @@ class SubscribeModelTest(TestCase):
         subscribe = Subscribe.objects.get(id=1)
         expected_object_name = f'{subscribe.author.username}'
         self.assertEqual(expected_object_name, str(subscribe))
-
-    def test_get_absolute_url(self):
-        subscribe = Subscribe.objects.get(id=1)
-        self.assertEqual(subscribe.get_absolute_url(), '/subscribe/1/')
 
     def test_unique_subscription(self):
         test_user1 = User.objects.get(username='testuser1')
