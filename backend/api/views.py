@@ -111,7 +111,7 @@ class RecipeViewSet(ModelViewSet):
                 recipe__shopping_cart__user=request.user
             )
             .values('ingredient__name', 'ingredient__measurement_unit')
-            .annotate(summa=Sum('amount'))
+            .annotate(total=Sum('amount'))
         )
 
         today = timezone.now()
@@ -123,7 +123,7 @@ class RecipeViewSet(ModelViewSet):
             [
                 f'- {ingredient["ingredient__name"]} '
                 f'({ingredient["ingredient__measurement_unit"]})'
-                f' - {ingredient["summa"]}'
+                f' - {ingredient["total"]}'
                 for ingredient in ingredients
             ]
         )
