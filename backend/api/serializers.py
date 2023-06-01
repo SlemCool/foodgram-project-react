@@ -1,5 +1,4 @@
 from django.db.models import F
-from django.shortcuts import get_object_or_404
 from djoser.serializers import UserCreateSerializer, UserSerializer
 from drf_extra_fields.fields import Base64ImageField
 from recipes.models import Ingredient, IngredientInRecipe, Recipe, Tag
@@ -176,8 +175,7 @@ class RecipeWriteSerializer(ModelSerializer):
             )
         ingredients_list = []
         for item in ingredients:
-            ingredient = get_object_or_404(Ingredient, id=item['id'])
-            if ingredient in ingredients_list:
+            if item in ingredients_list:
                 raise ValidationError(
                     {'ingredients': 'Ингридиенты не могут повторяться!'}
                 )
@@ -185,7 +183,7 @@ class RecipeWriteSerializer(ModelSerializer):
                 raise ValidationError(
                     {'amount': 'Количество ингредиента должно быть больше 0!'}
                 )
-            ingredients_list.append(ingredient)
+            ingredients_list.append(item)
         return value
 
     def validate_tags(self, value):
@@ -205,7 +203,7 @@ class RecipeWriteSerializer(ModelSerializer):
         IngredientInRecipe.objects.bulk_create(
             [
                 IngredientInRecipe(
-                    ingredient=Ingredient.objects.get(id=ingredient['id']),
+                    ingredient_id=ingredient['id'],
                     recipe=recipe,
                     amount=ingredient['amount'],
                 )
@@ -231,7 +229,6 @@ class RecipeWriteSerializer(ModelSerializer):
         self.create_ingredients_amounts(
             recipe=instance, ingredients=ingredients
         )
-        instance.save()
         return instance
 
     def to_representation(self, instance):
