@@ -1,7 +1,7 @@
 from django.test import TestCase
-from users.models import User
 
 from .models import Ingredient, Recipe, Tag
+from users.models import User
 
 
 class IngredientModelTest(TestCase):
