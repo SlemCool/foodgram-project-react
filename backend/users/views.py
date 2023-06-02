@@ -1,5 +1,3 @@
-from api.pagination import CustomPagination
-from api.serializers import CustomUserSerializer, SubscribeSerializer
 from django.shortcuts import get_object_or_404
 from djoser.views import UserViewSet
 from rest_framework import status
@@ -8,6 +6,8 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 
 from .models import Subscribe, User
+from api.pagination import CustomPagination
+from api.serializers import CustomUserSerializer, SubscribeSerializer
 
 
 class CustomUserViewSet(UserViewSet):
