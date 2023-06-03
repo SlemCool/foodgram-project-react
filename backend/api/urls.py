@@ -15,7 +15,7 @@ router.register('recipes', RecipeViewSet)
 urlpatterns = [
     path('', include(router.urls)),
     path(
-        'redoc/',
+        'docs/',
         TemplateView.as_view(template_name='redoc.html'),
         name='redoc',
     ),
