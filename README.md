@@ -12,7 +12,7 @@
 
 ![workflow](https://github.com/SlemCool/foodgram-project-react/actions/workflows/main.yaml/badge.svg)
 
-Сайт доступен по адресу [foodgramm.ddns.net](http://foodgramm.ddns.net/) foodgramm.ddns.net
+Сайт доступен по адресу [foodgramm.ddns.net](http://foodgramm.ddns.net/)
 
 - Логин: admin@foodgramm.com
 - Пароль: 1qa2ws3ed4rf
