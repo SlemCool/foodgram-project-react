@@ -24,57 +24,45 @@ class UserViewSet(mixins.CreateModelMixin,
             return UserReadSerializer
         return UserCreateSerializer
 
-    @action(
-        detail=False,
-        methods=['get'],
-        pagination_class=None,
-        permission_classes=(IsAuthenticated,),
-    )
+    @action(detail=False, methods=['get'],
+            pagination_class=None,
+            permission_classes=(IsAuthenticated,))
     def me(self, request):
         serializer = UserReadSerializer(request.user)
-        return Response(serializer.data, status=status.HTTP_200_OK)
+        return Response(serializer.data,
+                        status=status.HTTP_200_OK)
 
-    @action(
-        detail=False, methods=['post'], permission_classes=(IsAuthenticated,)
-    )
+    @action(detail=False, methods=['post'],
+            permission_classes=(IsAuthenticated,))
     def set_password(self, request):
         serializer = SetPasswordSerializer(request.user, data=request.data)
         if serializer.is_valid(raise_exception=True):
             serializer.save()
-        return Response(
-            {'detail': 'Пароль успешно изменен!'},
-            status=status.HTTP_204_NO_CONTENT,
-        )
+        return Response({'detail': 'Пароль успешно изменен!'},
+                        status=status.HTTP_204_NO_CONTENT)
 
-    @action(
-        detail=False,
-        methods=['get'],
-        permission_classes=(IsAuthenticated,),
-        pagination_class=CustomPagination,
-    )
+    @action(detail=False, methods=['get'],
+            permission_classes=(IsAuthenticated,),
+            pagination_class=CustomPagination)
     def subscriptions(self, request):
         queryset = User.objects.filter(author__user=request.user)
         pages = self.paginate_queryset(queryset)
-        serializer = SubscriptionsSerializer(
-            pages, many=True, context={'request': request}
-        )
+        serializer = SubscriptionsSerializer(pages, many=True,
+                                             context={'request': request})
         return self.get_paginated_response(serializer.data)
 
-    @action(
-        detail=True,
-        methods=['post', 'delete'],
-        permission_classes=(IsAuthenticated,),
-    )
+    @action(detail=True, methods=['post', 'delete'],
+            permission_classes=(IsAuthenticated,))
     def subscribe(self, request, **kwargs):
         author = get_object_or_404(User, id=kwargs['pk'])
 
         if request.method == 'POST':
             serializer = SubscribeAuthorSerializer(
-                author, data=request.data, context={"request": request}
-            )
+                author, data=request.data, context={"request": request})
             serializer.is_valid(raise_exception=True)
             Subscribe.objects.create(user=request.user, author=author)
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
+            return Response(serializer.data,
+                            status=status.HTTP_201_CREATED)
 
         get_object_or_404(Subscribe, user=request.user,
                           author=author).delete()
