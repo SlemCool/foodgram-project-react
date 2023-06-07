@@ -11,7 +11,7 @@ from rest_framework.serializers import (ModelSerializer, ReadOnlyField,
                                         ValidationError)
 
 from recipes.models import (Favorite, Ingredient, IngredientInRecipe, Recipe,
-                            Shopping_cart, Tag)
+                            ShoppingCart, Tag)
 from users.models import Subscribe, User
 
 
@@ -235,7 +235,7 @@ class RecipeReadSerializer(ModelSerializer):
 
     def get_is_in_shopping_cart(self, obj):
         user = self.context.get('request').user
-        return (user.is_authenticated and Shopping_cart.objects.filter(
+        return (user.is_authenticated and ShoppingCart.objects.filter(
             user=user, recipe=obj).exists()
         )
 
