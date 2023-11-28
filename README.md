@@ -14,9 +14,6 @@
 
 Сайт доступен по адресу [foodgramm.ddns.net](http://foodgramm.ddns.net/)
 
-- Логин: admin@foodgramm.com
-- Пароль: 1qa2ws3ed4rf
-
 Документация к API доступна по адресу [foodgramm.ddns.net/api/docs/](http://foodgramm.ddns.net/api/docs/)
 
 ### :hammer_and_wrench: Технологии:
